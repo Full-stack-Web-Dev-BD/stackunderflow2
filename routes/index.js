@@ -115,6 +115,7 @@ router.post("/createaccount", async (req, res) => {
                     usermail: postData.email,
                     userpassword: cpassword,
                     userpicture: "default.png",
+                    teamname: postData.teamname
                 })
                 var createdUser = await user.save()
                 //5 - SHOW CONFIRMATION PAGE

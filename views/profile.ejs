@@ -28,12 +28,17 @@
             <div class="text-center">
                 <img style="max-width: 300px;" class="card-img-top" src="../uploads/<%=locals.user.userpicture %>"
                     alt="Profile Picture">
+                <h5 class="text-center"> Name : <%=locals.user.username %>
+                </h5>
+                <h5 class="text-center"> Team : <%=locals.user.teamname %>
+                </h5>
                 <div class="card-body">
                     <button class="btn btn-success"> <a style="color: white;" href="/home/upload">Upload Profile
                             Picture</a>
                     </button>
                     <button class="btn btn-info"> <a style="color: white;" href="/home">Ask a question</a> </button>
                 </div>
+
             </div>
         </div>
     </div>

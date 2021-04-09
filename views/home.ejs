@@ -32,20 +32,13 @@
                 <%=locals.user.username %>
             </h1>
         </div>
-        <form action="./home/askquestion" method="post">
+        <form action="/home/getcategoryquestion" method="post">
             <div class="row">
                 <div class="col-10 offset-1  ">
-                    <!-- question category subject -->
-                    <h3>Ask your question</h3>
-
-                    <label for="question">Question</label>
-                    <textarea id="question" required rows="4" name="question" class="form-control"
-                        placeholder="Write your question here..."></textarea>
-
-                    <label for="category">Select Category</label>
+                    <h3>Select Category</h3>
                     <select name="category" id="category" class="form-control" required>
-                        <option value="">Select Category</option>
-                        <option value="JavaScript (React.js and Node.js)">JavaScript</option>
+                        <option value="">Select Category to continue</option>
+                        <option value="JavaScript">JavaScript</option>
                         <option value="Python">Node.js</option>
                         <option value="Python">ReactJS</option>
                         <option value="Python">AngularJS</option>
@@ -65,86 +58,16 @@
                         <option value="Swift">Swift</option>
                         <option value="MATLAB">MATLAB</option>
                         <option value="SQL">SQL</option>
-                        <option value="R Programming Language">R Programming Language</option>
-                        <option value="Golang (Go)">Golang (Go)</option>
+                        <option value="Golang">Golang (Go)</option>
                         <option value="Ruby">Ruby</option>
                     </select>
 
-                    <label for="subject">Subject</label>
-                    <input required class="form-control" id="subject" name="subject" placeholder="Subject" />
-
                     <div class=" mt-4 text-right">
-                        <input required type="submit" value="Publish" class="btn btn-primary  btn-sm" />
+                        <input required type="submit" value="Continue" class="btn btn-primary  btn-sm" />
                     </div>
                 </div>
             </div>
         </form>
-    </div>
-
-
-    <div id="publications">
-        <div class="col-6 offset-3 mt-5">
-            <h2 class="">People asked for answer </h2>
-        </div>
-        <% locals.publicationsData.forEach( (publication)=> { %>
-            <div class="col-6 offset-3 card">
-                <div class="card-header">
-                    <img height="60" width="60" style="border-radius:50%"
-                        src="../uploads/<%= publication.user[0].userpicture %>" />
-                    <h1>
-                        <%= publication.user[0].username %>
-                    </h1>
-                </div>
-                <div class="card-body">
-                    <h3>
-                        <%= publication.question %>
-                    </h3>
-                    <div class=" d-flex">
-                        <p>Category : <button class="btn btn-info btn-sm mr-5 ml-2">
-                                <%= publication.category %>
-                            </button>
-                        </p>
-                        <p>Subject : <button class="btn btn-success btn-sm mr-5 ml-2">
-                                <%= publication.subject %>
-                            </button>
-                        </p>
-                        </p>
-                    </div>
-                </div>
-                <div class="card-footer text-right">
-                    <span class="badge badge-info"><i class="fa fa-clock"></i>
-                        <% var date=new Date(publication.time) %>
-                            <%= date.getHours() +":"+ date.getMinutes() %>
-                    </span>
-                </div>
-                <div class="mt-1 row">
-                    <div class="col-11 offset-1">
-                        <form action="/home/ansquestion/<%= publication._id %>" method="POST">
-                            <label>Write an answer</label>
-                            <input name="answer" class="form-control" type="text" placeholder=" Publish  a answer" />
-                            <button type="submit" class="mt-2 ml-auto btn btn-primary">Publish</button>
-                        </form>
-                        <div class="card">
-                            <% publication.answers.forEach( (ans)=> { %>
-                                <div class="card-header">
-
-                                    <img height="30" width="30" style="border-radius:50%"
-                                        src="../uploads/<%= ans.user.userpicture %>" />
-                                    <h1 style="text-transform: capitalize">
-                                        <%= ans.user.username %>
-                                    </h1>
-                                    <div>
-                                        <p>
-                                            <%= ans.answer %>
-                                        </p>
-                                    </div>
-                                </div>
-                                <% }) %>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <% }) %>
     </div>
 
 </body>

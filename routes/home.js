@@ -63,6 +63,28 @@ router.get('/profile', md_security.checkDisConnectedUser, async (req, res) => {
     }
 })
 
+router.post('/getcategoryquestion', md_security.checkDisConnectedUser, async (req, res) => {
+    if (!req.session.user) {
+        res.redirect('/')
+    }
+    res.redirect(`/home/getcategoryquestion/${req.body.category}`)
+})
+
+
+router.get('/getcategoryquestion/:category', md_security.checkDisConnectedUser, async (req, res) => {
+    if (!req.session.user) {
+        res.redirect('/')
+    }
+    console.log(req.params.category)
+    questionModel.find({ category: req.params.category })
+        .then(questions => {
+            console.log(questions)
+            res.render('categoryquestion', { publicationsData: { category: req.params.category, questions: questions } });
+        })
+        .catch(err => {
+            res.send('Error')
+        })
+})
 router.get('/upload', md_security.checkDisConnectedUser, async (req, res) => {
     var publicationsData = await publications.find().populate('user').sort({ datetime: -1 })
 
@@ -117,7 +139,7 @@ router.post('/ansquestion/:id', async (req, res) => {
                 question.save()
                     .then((updated) => {
                         console.log(updated)
-                        res.redirect("/home")
+                        res.redirect(`/home/getcategoryquestion/${postData.category}`)
                     })
             })
             .catch((error) => {

@@ -1,0 +1,148 @@
+<html>
+
+<head>
+    <title>
+        <%= locals.APPNAME %>
+            <%= locals.VERSION %> - Home
+    </title>
+    <%- include('_inc_head') %>
+        <link href="css/home.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <nav class="col-6 offset-3 mt-5 card">
+        <div class="row p-2">
+            <div class="col-4 text-center">
+                <a href="/home"><span class="fa fa-home"></span></a>
+            </div>
+            <div class="col-4 text-center">
+                <a href="/home/profile">Profile</a>
+            </div>
+            <div class="col-4 text-center ">
+                <a href="logout"><span class="fa fa-lock"></span></a>
+            </div>
+        </div>
+    </nav>
+    <div class="col-6 offset-3 mt-5">
+        <h3 class="alert alert-info sr-only">Category : <%= locals.category %>
+        </h3>
+    </div>
+    <div id="publishForm" class="col-6 offset-3 card mt-5">
+        <div class="card-header">
+            <h1>
+                Hi <%=locals.user.username %>
+            </h1>
+        </div>
+        <form action="/home/askquestion" method="post">
+            <div class="row">
+                <div class="col-10 offset-1  ">
+                    <!-- question category subject -->
+
+                    <label for="question">Question</label>
+                    <textarea id="question" required rows="4" name="question" class="form-control"
+                        placeholder="Write your question here..."></textarea>
+
+                    <label for="category">Select Category</label>
+                    <select name="category" id="category" class="form-control" required>
+                        <option value="">Select Category</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="Python">Node.js</option>
+                        <option value="Python">ReactJS</option>
+                        <option value="Python">AngularJS</option>
+                        <option value="Python">Python</option>
+                        <option value="HTML">HTML</option>
+                        <option value="CSS">CSS</option>
+                        <option value="C++">C++</option>
+                        <option value="TypeScript">TypeScript</option>
+                        <option value="Rust">Rust</option>
+                        <option value="Scheme">Scheme</option>
+                        <option value="Java">Java</option>
+                        <option value="Kotlin">Kotlin</option>
+                        <option value="C#">C#</option>
+                        <option value="Perl">Perl</option>
+                        <option value="PHP">PHP</option>
+                        <option value="Scala">Scala</option>
+                        <option value="Swift">Swift</option>
+                        <option value="MATLAB">MATLAB</option>
+                        <option value="SQL">SQL</option>
+                        <option value="Golang">Golang</option>
+                        <option value="Ruby">Ruby</option>
+                    </select>
+
+                    <label for="subject">Subject</label>
+                    <input required class="form-control" id="subject" name="subject" placeholder="Subject" />
+
+                    <div class=" mt-4 text-right">
+                        <input required type="submit" value="Publish" class="btn btn-primary  btn-sm" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="publications">
+        <div class="col-6 offset-3 ">
+            <h2 class="">People asked for answer </h2>
+        </div>
+        <% locals.publicationsData.questions.forEach( (publication)=> { %>
+            <div class="col-6 offset-3 card mt-5 pb-4">
+                <div class="card-header">
+                    <h3>
+                        <%= publication.user[0].username %>
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <h3>
+                        <%= publication.question %>
+                    </h3>
+                    <div class=" d-flex">
+                        <p>Category : <button class="btn btn-info btn-sm mr-5 ml-2">
+                                <%= publication.category %>
+                            </button>
+                        </p>
+                        <p>Subject : <button class="btn btn-success btn-sm mr-5 ml-2">
+                                <%= publication.subject %>
+                            </button>
+                        </p>
+                        </p>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <span class="badge badge-info"><i class="fa fa-clock"></i>
+                        <% var date=new Date(publication.time) %>
+                            <%= date.getHours() +":"+ date.getMinutes() %>
+                    </span>
+                </div>
+                <div class="mt-1 row">
+                    <div class="col-11 offset-1">
+                        <form action="/home/ansquestion/<%= publication._id %>" method="POST">
+                            <label>Write an answer</label>
+                            <input name="category" class="form-control" defaultValue="<%= publication.category %>"
+                                value="<%= publication.category %>" style="display:none" />
+                            <input name="answer" class="form-control" type="text" placeholder=" Publish  a answer" />
+                            <button type="submit" class="mt-2 ml-auto btn btn-primary">Publish</button>
+                        </form>
+                        <h4 class="mt-3 mb-1">Answer's</h4>
+                        <div class="card">
+                            <% publication.answers.forEach( (ans)=> { %>
+                                <div class="card-header">
+                                    <h5 style="text-transform: capitalize">
+                                        <%= ans.user.username %>
+                                    </h5>
+                                    <div>
+                                        <p>
+                                            <%= ans.answer %>
+                                        </p>
+                                    </div>
+                                </div>
+                                <% }) %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+    </div>
+
+</body>
+
+</html>
