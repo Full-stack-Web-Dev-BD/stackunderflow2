@@ -121,6 +121,28 @@ router.post('/askquestion', async (req, res) => {
     }
 })
 
+
+router.post('/markcurrect/:id', async (req, res) => {
+    console.log(req.body)
+    console.log(req.params.id)
+    questionModel.findOne({ _id: req.body.qid })
+        .then(question => {
+            let allanswer = question.answers
+            let i = allanswer.findIndex((obj => obj.id == req.params.id));
+            // allanswer[i].currect = true
+            // console.log('alanswer', allanswer)
+            // question.answers = [...allanswer]
+            question.corrected = [allanswer[i]]
+            question.save()
+                .then((updated) => {
+                    res.redirect(`/home/getcategoryquestion/${req.body.category}`)
+                })
+                .catch((error) => {
+                    res.redirect("/")
+                })
+        })
+})
+
 router.post('/ansquestion/:id', async (req, res) => {
     const _id = req.params.id
     var postData = req.body;
@@ -133,8 +155,10 @@ router.post('/ansquestion/:id', async (req, res) => {
         questionModel.findOne({ _id: _id })
             .then(question => {
                 question.answers.push({
+                    id: Date.now(),
                     user: req.session.user,
-                    answer: postData.answer
+                    answer: postData.answer,
+                    currect: false
                 })
                 question.save()
                     .then((updated) => {

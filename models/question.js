@@ -12,6 +12,10 @@ var questionSchema = new mongoose.Schema({
     answers: {
         type: Array,
         default: []
+    },
+    corrected: {
+        type: Array,
+        default: []
     }
 })
 

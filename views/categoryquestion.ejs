@@ -122,21 +122,54 @@
                             <input name="answer" class="form-control" type="text" placeholder=" Publish  a answer" />
                             <button type="submit" class="mt-2 ml-auto btn btn-primary">Publish</button>
                         </form>
-                        <h4 class="mt-3 mb-1">Answer's</h4>
-                        <div class="card">
-                            <% publication.answers.forEach( (ans)=> { %>
-                                <div class="card-header">
-                                    <h5 style="text-transform: capitalize">
-                                        <%= ans.user.username %>
-                                    </h5>
-                                    <div>
-                                        <p>
-                                            <%= ans.answer %>
-                                        </p>
-                                    </div>
+
+                        <% if( publication.corrected.length> 0 ) { %>
+                            <div class="alert alert-success ">
+                                <h5 style="text-transform: capitalize">
+                                    <%= publication.corrected[0].user.username %>
+                                </h5>
+                                <div>
+                                    <p>
+                                        <%= publication.corrected[0].answer %>
+                                    </p>
                                 </div>
-                                <% }) %>
-                        </div>
+                            </div>
+                            <% } %>
+
+
+                                <h4 class="mt-3 mb-1">Answer's</h4>
+
+                                <div class="card">
+                                    <% publication.answers.forEach( (ans)=> { %>
+                                        <div class="card-header">
+                                            <h5 style="text-transform: capitalize">
+                                                <%= ans.user.username %>
+                                            </h5>
+                                            <div>
+                                                <p>
+                                                    <%= ans.answer %>
+                                                </p>
+                                            </div>
+
+                                            <% if( locals.user._id===publication.user[0]._id ) { %>
+                                                <form action="/home/markcurrect/<%= ans.id %>" method="POST">
+                                                    <input name="category" class="form-control"
+                                                        defaultValue="<%= publication.category %>"
+                                                        value="<%= publication.category %>" style="display:none" />
+
+                                                    <input name="qid" class="form-control"
+                                                        defaultValue="<%= publication._id %>"
+                                                        value="<%= publication._id %>" style="display:none" />
+
+                                                    <button type="submit" class="mt-2 ml-auto btn btn-primary">Mark
+                                                        as
+                                                        currect</button>
+
+                                                </form>
+                                                <% } %>
+                                        </div>
+                                        <% }) %>
+                                </div>
                     </div>
                 </div>
             </div>
