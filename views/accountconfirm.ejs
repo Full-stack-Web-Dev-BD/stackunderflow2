@@ -1,0 +1,32 @@
+<html>
+
+<head>
+    <title>
+        <%= locals.APPNAME %>
+            <%= locals.VERSION %> - Register
+    </title>
+    <%- include('_inc_head') %>
+        <link href="css/index.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div id="mainForm" class="col-lg-3 col-sm-12">
+        <img src="images/logo.svg" width="100" />
+        <h1 class="text-center">
+            <%= locals.APPNAME %>
+                <%= locals.VERSION %>
+        </h1>
+
+        <div class="row">
+            <div class="col-10 offset-1 alert alert-success">
+                Congratulation
+                <%= locals.user.username  %> ! your account is created
+            </div>
+            <a href="./" class="btn btn-primary btn-block">Start</a>
+        </div>
+    </div>
+
+</body>
+
+</html>

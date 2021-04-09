@@ -1,0 +1,72 @@
+<html>
+
+<head>
+    <title>
+        <%= locals.APPNAME %>
+            <%= locals.VERSION %> - Login</title>
+    <%- include('_inc_head') %>
+        <link href="css/index.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div id="mainForm" class="col-lg-3 col-sm-12">
+
+        <img src="images/logo.svg" width="100" />
+        <h1 class="text-center">
+            <%= locals.APPNAME %>
+                <%= locals.VERSION %>
+        </h1>
+        <form action="login" method="post">
+            <div class="row">
+                <div class="col-10 offset-1">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><span class="fa fa-user"></span></div>
+                        </div>
+                        <input type="text" class="form-control" placeholder="User mail" name="mail" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-10 offset-1">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><span class="fa fa-key"></span></div>
+                        </div>
+                        <input type="password" class="form-control" placeholder="Password" name="password" />
+                    </div>
+                </div>
+            </div>
+
+            <% if( locals.error ) { %>
+
+                <div class="row">
+                    <div class="col-10 offset-1">
+                        <div class="alert alert-danger">
+                            <%= locals.error %>
+                        </div>
+                    </div>
+                </div>
+
+                <% } %>
+
+                    <div class="row">
+                        <div class="col-10 offset-1">
+                            <label><input type="checkbox"> Keep user's informations</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 offset-1">
+                            <a href="register">Create an account</a>
+                        </div>
+                        <div class="col-4">
+                            <input type="submit" class="btn btn-primary btn-block" value="Login" />
+                        </div>
+                    </div>
+        </form>
+    </div>
+
+</body>
+
+</html>

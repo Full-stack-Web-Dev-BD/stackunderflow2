@@ -1,0 +1,9 @@
+<%= cars %>
+    <ul>
+        <% cars.forEach(car => { %>
+            <li>
+                <%= car.year %>
+                    <%= car.model %>
+            </li>
+            <% }); %>
+    </ul>

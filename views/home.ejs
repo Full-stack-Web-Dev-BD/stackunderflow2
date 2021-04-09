@@ -1,0 +1,93 @@
+<html>
+
+<head>
+    <title>
+        <%= locals.APPNAME %>
+            <%= locals.VERSION %> - Home
+    </title>
+    <%- include('_inc_head') %>
+        <link href="css/home.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <nav class="col-6 offset-3">
+        <div class="row">
+            <div class="col-4">
+                <a href="/home"><span class="fa fa-home"></span></a>
+            </div>
+            <div class="col-4">
+                <a href="/home/profile">Profile</a>
+            </div>
+            <div class="col-4">
+                <a href="logout"><span class="fa fa-lock"></span></a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="publishForm" class="col-6 offset-3 card">
+        <div class="card-header">
+            <img height="60" width="60" style="border-radius: 50%;" src="../uploads/<%= locals.user.userpicture %>" />
+            <h1>
+                <%=locals.user.username %>
+            </h1>
+        </div>
+        <form action="./home/askquestion" method="post">
+            <div class="row">
+                <div class="col-10 offset-1  ">
+                    <!-- question category subject -->
+                    <h3>Ask your question</h3>
+
+                    <label for="question">Question</label>
+                    <textarea id="question" required rows="4" name="question" class="form-control"
+                        placeholder="Write your question here..."></textarea>
+
+                    <label for="category">Category</label>
+                    <input required class="form-control" id="category" name="category" placeholder="Category" />
+
+                    <label for="subject">Subject</label>
+                    <input required class="form-control" id="subject" name="subject" placeholder="Subject" />
+
+                    <div class=" mt-4 text-right">
+                        <input required type="submit" value="Publish" class="btn btn-primary  btn-sm" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <% if ( locals.error ) { %>
+                        <div class="alert alert-danger">
+                            <%= locals.error %>
+                        </div>
+                        <% } %>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <div id="publications">
+        <% locals.publicationsData.forEach( (publication)=> { %>
+            <div class="col-6 offset-3 card">
+                <div class="card-header">
+                    <h1>
+                    </h1>
+                </div>
+                <div class="card-body">
+                    <p>
+                        <%= publication.context %>
+                    </p>
+                </div>
+                <div class="card-footer text-right">
+                    <span class="badge badge-info"><i class="fa fa-clock"></i>
+                        <% var date=new Date(publication.time) %>
+                            <%= date.getHours() +":"+ date.getMinutes() %>
+                    </span>
+                </div>
+            </div>
+            <% }) %>
+    </div>
+
+</body>
+
+</html>

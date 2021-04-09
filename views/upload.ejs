@@ -1,0 +1,40 @@
+<html>
+
+<head>
+    <title>
+        <%= locals.APPNAME %>
+            <%= locals.VERSION %> - Home
+    </title>
+    <%- include('_inc_head') %>
+        <link href="css/home.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="col-6 offset-3 mt-5">
+        <div class="card" style="width: 100%;">
+            <nav class="col-12 mt-1 mb-2  ">
+                <div class="row">
+                    <div class="col-4 text-center">
+                        <a href="/home"><span class="fa fa-home"></a>
+                    </div>
+                    <div class="col-4 text-center">
+                        <a href="/home/profile">Profile</a>
+                    </div>
+                    <div class="col-4 text-center">
+                        <a href="logout"><span class="fa fa-lock"></span></a>
+                    </div>
+                </div>
+            </nav>
+            <div class="card-body">
+                <form enctype="multipart/form-data" action="/home/upload" method="POST">
+                    <input type="file" required name="file" accept="image/jpeg,image/png" id="ppupload" />
+                    <button type="submit" class="btn btn-sm btn-success">Upload</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
