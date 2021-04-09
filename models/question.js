@@ -8,6 +8,10 @@ var questionSchema = new mongoose.Schema({
     time: {
         type: String,
         default: new Date()
+    },
+    answers: {
+        type: Array,
+        default: []
     }
 })
 

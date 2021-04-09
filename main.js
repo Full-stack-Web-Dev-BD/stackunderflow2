@@ -7,7 +7,13 @@ const morgan = require('morgan')
 
 dotenv.config();
 var mongoose = require("mongoose");
-mongoose.connect(process.env.DATABASE)
+mongoose.connect(process.env.DATABASE, { useUnifiedTopology: true, useNewUrlParser: true }, (err) => {
+    if (err) {
+        return console.log('Database connection  failed')
+    }
+    console.log('MongoDB Connected')
+
+})
 
 var port = process.env.PORT;
 var indexRouter = require("./routes/index");

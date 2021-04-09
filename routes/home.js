@@ -24,16 +24,16 @@ router.post('/upload', upload.single('file'), (req, res) => {
     if (!req.session.user) {
         res.redirect("/")
     }
-    userModel.findOne({ _id: req.session.user._id })
+    userModel.findOne({ _id: req.session.user._id }, { new: true })
         .then(user => {
             user.userpicture = req.file.filename
             user.save()
                 .then(updated => {
                     console.log(updated)
-                    res.redirect('/home/profile')
+                    res.redirect('/logout')
                 })
                 .catch(err => {
-                    res.redirect('/home')
+                    res.redirect('/logout')
                 })
         })
 })
@@ -42,13 +42,14 @@ router.get('/', md_security.checkDisConnectedUser, async (req, res) => {
     if (!req.session.user) {
         res.redirect('/')
     }
-    var publicationsData = await questionModel.find().populate('user').sort({ datetime: -1 })
-    console.log(publicationsData)
-    if (req.query.error)
-        res.render('home', { error: "Text is required", publicationsData: publicationsData });
-    else {
-        res.render("home", { publicationsData: publicationsData })
-    }
+    questionModel.find()
+        .then(questions => {
+            console.log(questions)
+            res.render('home', { error: "Text is required", publicationsData: questions });
+        })
+        .catch(err => {
+            res.render("home", { publicationsData: questions })
+        })
 })
 
 router.get('/profile', md_security.checkDisConnectedUser, async (req, res) => {
@@ -74,7 +75,10 @@ router.get('/upload', md_security.checkDisConnectedUser, async (req, res) => {
 
 router.post('/askquestion', async (req, res) => {
     var postData = req.body;
-    console.log(req.body)
+    if (!req.session.user) {
+        return res.redirect('/')
+
+    }
     if (postData.question && postData.category && postData.subject) {
         //2 - INSERT PUBLICATION
         console.log(req.session.user)
@@ -82,9 +86,8 @@ router.post('/askquestion', async (req, res) => {
             question: postData.question,
             category: postData.category,
             subject: postData.subject,
-            user: [{
-                user: req.session.user
-            }]
+            user: [req.session.user
+            ]
         })
         await question.save()
             .then(saved => {
@@ -93,6 +96,35 @@ router.post('/askquestion', async (req, res) => {
         res.redirect("/home")
     } else {
         res.redirect("/home?error=1")
+    }
+})
+
+router.post('/ansquestion/:id', async (req, res) => {
+    const _id = req.params.id
+    var postData = req.body;
+    if (!req.session.user) {
+        return res.redirect('/')
+
+    }
+    if (postData.answer) {
+        //2 - INSERT PUBLICATION
+        questionModel.findOne({ _id: _id })
+            .then(question => {
+                question.answers.push({
+                    user: req.session.user,
+                    answer: postData.answer
+                })
+                question.save()
+                    .then((updated) => {
+                        console.log(updated)
+                        res.redirect("/home")
+                    })
+            })
+            .catch((error) => {
+                res.redirect("/")
+            })
+    } else {
+        res.redirect("/")
     }
 })
 router.post('upload')

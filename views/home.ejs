@@ -42,8 +42,33 @@
                     <textarea id="question" required rows="4" name="question" class="form-control"
                         placeholder="Write your question here..."></textarea>
 
-                    <label for="category">Category</label>
-                    <input required class="form-control" id="category" name="category" placeholder="Category" />
+                    <label for="category">Select Category</label>
+                    <select name="category" id="category" class="form-control" required>
+                        <option value="">Select Category</option>
+                        <option value="JavaScript (React.js and Node.js)">JavaScript</option>
+                        <option value="Python">Node.js</option>
+                        <option value="Python">ReactJS</option>
+                        <option value="Python">AngularJS</option>
+                        <option value="Python">Python</option>
+                        <option value="HTML">HTML</option>
+                        <option value="CSS">CSS</option>
+                        <option value="C++">C++</option>
+                        <option value="TypeScript">TypeScript</option>
+                        <option value="Rust">Rust</option>
+                        <option value="Scheme">Scheme</option>
+                        <option value="Java">Java</option>
+                        <option value="Kotlin">Kotlin</option>
+                        <option value="C#">C#</option>
+                        <option value="Perl">Perl</option>
+                        <option value="PHP">PHP</option>
+                        <option value="Scala">Scala</option>
+                        <option value="Swift">Swift</option>
+                        <option value="MATLAB">MATLAB</option>
+                        <option value="SQL">SQL</option>
+                        <option value="R Programming Language">R Programming Language</option>
+                        <option value="Golang (Go)">Golang (Go)</option>
+                        <option value="Ruby">Ruby</option>
+                    </select>
 
                     <label for="subject">Subject</label>
                     <input required class="form-control" id="subject" name="subject" placeholder="Subject" />
@@ -53,36 +78,70 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-6">
-                    <% if ( locals.error ) { %>
-                        <div class="alert alert-danger">
-                            <%= locals.error %>
-                        </div>
-                        <% } %>
-                </div>
-            </div>
         </form>
     </div>
 
 
     <div id="publications">
+        <div class="col-6 offset-3 mt-5">
+            <h2 class="">People asked for answer </h2>
+        </div>
         <% locals.publicationsData.forEach( (publication)=> { %>
             <div class="col-6 offset-3 card">
                 <div class="card-header">
+                    <img height="60" width="60" style="border-radius:50%"
+                        src="../uploads/<%= publication.user[0].userpicture %>" />
                     <h1>
+                        <%= publication.user[0].username %>
                     </h1>
                 </div>
                 <div class="card-body">
-                    <p>
-                        <%= publication.context %>
-                    </p>
+                    <h3>
+                        <%= publication.question %>
+                    </h3>
+                    <div class=" d-flex">
+                        <p>Category : <button class="btn btn-info btn-sm mr-5 ml-2">
+                                <%= publication.category %>
+                            </button>
+                        </p>
+                        <p>Subject : <button class="btn btn-success btn-sm mr-5 ml-2">
+                                <%= publication.subject %>
+                            </button>
+                        </p>
+                        </p>
+                    </div>
                 </div>
                 <div class="card-footer text-right">
                     <span class="badge badge-info"><i class="fa fa-clock"></i>
                         <% var date=new Date(publication.time) %>
                             <%= date.getHours() +":"+ date.getMinutes() %>
                     </span>
+                </div>
+                <div class="mt-1 row">
+                    <div class="col-11 offset-1">
+                        <form action="/home/ansquestion/<%= publication._id %>" method="POST">
+                            <label>Write an answer</label>
+                            <input name="answer" class="form-control" type="text" placeholder=" Publish  a answer" />
+                            <button type="submit" class="mt-2 ml-auto btn btn-primary">Publish</button>
+                        </form>
+                        <div class="card">
+                            <% publication.answers.forEach( (ans)=> { %>
+                                <div class="card-header">
+
+                                    <img height="30" width="30" style="border-radius:50%"
+                                        src="../uploads/<%= ans.user.userpicture %>" />
+                                    <h1 style="text-transform: capitalize">
+                                        <%= ans.user.username %>
+                                    </h1>
+                                    <div>
+                                        <p>
+                                            <%= ans.answer %>
+                                        </p>
+                                    </div>
+                                </div>
+                                <% }) %>
+                        </div>
+                    </div>
                 </div>
             </div>
             <% }) %>

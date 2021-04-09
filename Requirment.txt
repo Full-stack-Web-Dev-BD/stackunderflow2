@@ -1,0 +1,20 @@
+JavaScript (React.js and Node.js)
+Python
+HTML
+CSS
+C++
+TypeScript
+Rust
+Scheme
+Java 
+Kotlin
+C#
+Perl
+PHP
+Scala 
+Swift
+MATLAB
+SQL
+R Programming Language
+Golang (Go)
+Ruby
