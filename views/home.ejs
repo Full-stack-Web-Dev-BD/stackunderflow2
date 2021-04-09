@@ -69,7 +69,28 @@
             </div>
         </form>
     </div>
-
+    <div class="col-6 offset-3 mt-5 ">
+        <h3 class="alert alert-info"> All Users</h3>
+    </div>
+    <% locals.publicationsData.forEach( (publication)=> { %>
+        <div class="col-6 offset-3 card mt-5 pb-4">
+            <div class="card-header d-flex">
+                <img height="40" width="40" style="border-radius: 50%;"
+                    src="../uploads/<%= publication.userpicture %>" />
+                <h3>
+                    <%= publication.username %>
+                </h3>
+            </div>
+            <div class="card-body">
+                <h3>
+                    Name : <%= publication.teamname %>
+                </h3>
+                <h3 style="text-transform: capitalize;">
+                    Email : <%= publication.usermail %>
+                </h3>
+            </div>
+        </div>
+        <% }) %>
 </body>
 
 </html>

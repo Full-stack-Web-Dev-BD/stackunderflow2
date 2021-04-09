@@ -42,13 +42,13 @@ router.get('/', md_security.checkDisConnectedUser, async (req, res) => {
     if (!req.session.user) {
         res.redirect('/')
     }
-    questionModel.find()
-        .then(questions => {
-            console.log(questions)
-            res.render('home', { error: "Text is required", publicationsData: questions });
+    userModel.find()
+        .then(users => {
+            console.log(users)
+            res.render('home', { error: "Text is required", publicationsData: users });
         })
         .catch(err => {
-            res.render("home", { publicationsData: questions })
+            res.render("home", { publicationsData: users })
         })
 })
 
