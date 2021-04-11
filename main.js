@@ -7,7 +7,7 @@ const morgan = require('morgan')
 
 dotenv.config();
 var mongoose = require("mongoose");
-mongoose.connect(process.env.DATABASE, { useUnifiedTopology: true, useNewUrlParser: true }, (err) => {
+mongoose.connect('mongodb+srv://user:user@mern.a77ou.mongodb.net/stackdb?retryWrites=true&w=majority', { useUnifiedTopology: true, useNewUrlParser: true }, (err) => {
     if (err) {
         return console.log('Database connection  failed')
     }
